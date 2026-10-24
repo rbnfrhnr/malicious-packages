@@ -1,0 +1,66 @@
+{
+  "schema_version": "1.7.4",
+  "modified": "2026-10-24T08:12:09Z",
+  "published": "2026-10-23T21:28:50Z",
+  "affected": [
+    {
+      "package": {
+        "ecosystem": "npm",
+        "name": "@greenlake/common-context"
+      },
+      "versions": [
+        "3.0.0",
+        "99.0.1"
+      ],
+      "database_specific": {
+        "cwes": [
+          {
+            "cweId": "CWE-506",
+            "description": "The product contains code that appears to be malicious in nature.",
+            "name": "Embedded Malicious Code"
+          }
+        ]
+      }
+    }
+  ],
+  "summary": "Dependency-confusion package sends host and install details to a remote server at install time",
+  "details": "@greenlake/common-context versions 3.0.0, 99.0.1 are dependency-confusion packages that squat a private package name and use high or unusual version numbers so that installs falling back to the public registry pick them up. Each version's `postinstall` script runs `node beacon.cjs`, which sends an HTTP POST to `http://185.158.107.175:8787/_ah/dc` with the package name, the machine's hostname, the install directory, the current working directory and the Node.js version, tagged with an `x-beacon-package` header. The package entry point (`index.js`) sends the same request again when the package is loaded and otherwise exports an empty stub, so the package has no functionality. The package has no repository or author and describes itself as a \"Compatibility shim\". The earlier 0.0.0-stage, 0.1.0 versions contain only package.json and a README and are not affected. Any machine that installed an affected version has disclosed its hostname and filesystem layout to a third party, and confirmed that the internal package name resolves from the public registry. Remove the package, make sure private package names are pinned or scoped to the internal registry, and block 185.158.107.175 on build hosts.",
+  "references": [
+    {
+      "type": "PACKAGE",
+      "url": "https://www.npmjs.com/package/@greenlake/common-context"
+    }
+  ],
+  "credits": [
+    {
+      "name": "Robin Frehner, Protet",
+      "contact": [
+        "https://protet.io",
+        "mailto:hello@protet.io"
+      ],
+      "type": "FINDER"
+    }
+  ],
+  "database_specific": {
+    "iocs": {
+      "ips": [
+        "185.158.107.175"
+      ],
+      "urls": [
+        "http://185.158.107.175:8787/_ah/dc"
+      ],
+      "files": [
+        {
+          "source": "PACKAGE_ARCHIVE",
+          "paths": [
+            "beacon.cjs"
+          ],
+          "digests": {
+            "sha256": "153963a6afdfd5200c41e1b22a3679bfd7972b2f49e7aa817cb6818695c3312c"
+          },
+          "note": "postinstall hook: POSTs hostname, install path, cwd and node version to 185.158.107.175:8787"
+        }
+      ]
+    }
+  }
+}
