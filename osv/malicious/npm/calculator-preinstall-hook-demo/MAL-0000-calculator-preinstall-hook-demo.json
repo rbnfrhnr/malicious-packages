@@ -1,0 +1,50 @@
+{
+  "schema_version": "1.7.4",
+  "modified": "2026-11-01T12:00:00Z",
+  "published": "2026-11-01T08:29:02Z",
+  "affected": [
+    {
+      "package": {
+        "ecosystem": "npm",
+        "name": "calculator-preinstall-hook-demo"
+      },
+      "versions": [
+        "1.1.1",
+        "1.1.2"
+      ],
+      "database_specific": {
+        "cwes": [
+          {
+            "cweId": "CWE-506",
+            "description": "The product contains code that appears to be malicious in nature.",
+            "name": "Embedded Malicious Code"
+          }
+        ]
+      }
+    }
+  ],
+  "details": "calculator-preinstall-hook-demo 1.1.1 and 1.1.2 run node preinstall.js as a preinstall script. The script sends an HTTPS POST to a Discord webhook (https://discord.com/api/webhooks/1566215853794394162/<token>) with the text 'pitest: npm preinstall test notification.', which tells the webhook owner that the package was installed and from which network address, then writes a .preinstall-marker.json file into the package directory. Version 1.1.2 extends the message with 'Computer: <hostname>, User: <username>'. Remove the package and treat machines that installed either version as having disclosed their network address, and with 1.1.2 their hostname and user name, to a third party; block the webhook on build hosts.",
+  "references": [
+    {
+      "type": "PACKAGE",
+      "url": "https://www.npmjs.com/package/calculator-preinstall-hook-demo"
+    }
+  ],
+  "credits": [
+    {
+      "name": "Robin Frehner, Protet",
+      "contact": [
+        "https://protet.io",
+        "mailto:hello@protet.io"
+      ],
+      "type": "FINDER"
+    }
+  ],
+  "database_specific": {
+    "iocs": {
+      "urls": [
+        "https://discord.com/api/webhooks/1566215853794394162/"
+      ]
+    }
+  }
+}
