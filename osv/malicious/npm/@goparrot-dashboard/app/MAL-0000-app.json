@@ -1,0 +1,52 @@
+{
+  "schema_version": "1.7.4",
+  "modified": "2026-11-01T12:00:00Z",
+  "published": "2026-11-01T08:29:02Z",
+  "affected": [
+    {
+      "package": {
+        "ecosystem": "npm",
+        "name": "@goparrot-dashboard/app"
+      },
+      "versions": [
+        "0.0.2"
+      ],
+      "database_specific": {
+        "cwes": [
+          {
+            "cweId": "CWE-506",
+            "description": "The product contains code that appears to be malicious in nature.",
+            "name": "Embedded Malicious Code"
+          }
+        ]
+      }
+    }
+  ],
+  "details": "@goparrot-dashboard/app 0.0.2 contains only package.json and index.js; its preinstall script runs node index.js. The script runs the hostname and whoami commands, reads the working directory, then performs a DNS lookup of <user>.<hostname>.rootxravi.iuczektmwpudhwqnsbkgc6m8nx2dgn5vc.oast.fun and an HTTPS request to https://iuczektmwpudhwqnsbkgc6m8nx2dgn5vc.oast.fun/rootxravi-poc with the package name, hostname, user name, working directory and a timestamp in the query string. Errors are silently ignored. Only version 0.0.2 has an install script; 0.0.1 and 0.0.3 do not. Remove the package and treat machines that installed 0.0.2 as having disclosed their hostname, user name and working directory to a third party.",
+  "references": [
+    {
+      "type": "PACKAGE",
+      "url": "https://www.npmjs.com/package/@goparrot-dashboard/app"
+    }
+  ],
+  "credits": [
+    {
+      "name": "Robin Frehner, Protet",
+      "contact": [
+        "https://protet.io",
+        "mailto:hello@protet.io"
+      ],
+      "type": "FINDER"
+    }
+  ],
+  "database_specific": {
+    "iocs": {
+      "domains": [
+        "iuczektmwpudhwqnsbkgc6m8nx2dgn5vc.oast.fun"
+      ],
+      "urls": [
+        "https://iuczektmwpudhwqnsbkgc6m8nx2dgn5vc.oast.fun/rootxravi-poc"
+      ]
+    }
+  }
+}
